@@ -177,7 +177,7 @@
 
       <div class="carousel-inner">
           <div class="carousel-item active">
-              <img src="{% static 'img/caro_img4.jpg' %}" alt="Los Angeles" class="d-block" style="width: 100%; height: 600px;">
+              <img src="{% static 'img/caro_img3.jpg' %}" alt="Los Angeles" class="d-block" style="width: 100%; height: 600px;">
               <div class="carousel-caption">
                   <!-- <h3>The Best Learning Platform</h3> -->
               </div>
@@ -232,34 +232,59 @@
     <a href="courses" class="btn btn-primary">View All</a>
   </div> -->
 
-  <div class="container py-5" style="margin-top: 25px;">
-    <div class="row g-4">
-      {% for pro in products %}
-      <div class="col-sm-12 col-md-6 col-lg-4">
-        <a href="view_product/{{pro.pk}}" style="text-decoration: none;">
-          <div class="card h-100 shadow">
-            <img src="{{pro.img.url}}" class="card-img-top" alt="{{pro.name}}" style="height: 200px; object-fit: cover;">
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title">{{pro.name}}</h5>
-              <p class="card-text">{{pro.dis}}</p>
-                <div class="my-4">
-                    <h4 class="text-danger">Price: $ <strike> {{pro.price}} </strike></h4>
-                    <h5 class="text-success">Offer Price: {{pro.offer_price}}</h5>
+    <div class="container py-5" style="margin-top: 25px;">
+        <h3 class="mb-4"><b>Adidas</b></h3>
+        <div class="row g-4">
+            {% for a in adidas %}
+            {% if a.brand == 'Adidas' %}
+        <div class="col-sm-6 col-md-6 col-lg-3">
+            <a href="view_product/{{a.pk}}" style="text-decoration: none;">
+            <div class="card h-100 shadow">
+                <img src="{{a.img.url}}" class="card-img-top" alt="{{a.name}}" style="height: 200px; object-fit: cover;">
+                <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{a.name}}</h5>
+                <p class="card-text">{{a.dis}}</p>
+                    <div class="my-4">
+                        <h4 class="text-danger">Price: $ <strike> {{a.price}} </strike></h4>
+                        <h5 class="text-success">Offer Price: {{a.offer_price}}</h5>
+                    </div>
                 </div>
             </div>
-          </div>
-        </a>
-        
-      </div>
-      {% endfor %}
+            </a>
+            
+        </div>
+            {% endif %}
+            {% endfor %}
+        </div>
     </div>
-  </div>
 
-        <!-- <div class="col-md-6 hero-image">
-            <img src="{% static 'img/bul_name.jpg' %}" alt="Solopreneur">
-        </div> -->
+    <div class="container py-5" style="margin-top: 25px;">
+        <h3 class="mb-4"><b>Nike</b></h3>
+        <div class="row g-4">
+            {% for a in nike %}
+            {% if a.brand == 'Nike' %}
+        <div class="col-sm-6 col-md-6 col-lg-3">
+            <a href="view_product/{{a.pk}}" style="text-decoration: none;">
+            <div class="card h-100 shadow">
+                <img src="{{a.img.url}}" class="card-img-top" alt="{{a.name}}" style="height: 200px; object-fit: cover;">
+                <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{a.name}}</h5>
+                <p class="card-text">{{a.dis}}</p>
+                    <div class="my-4">
+                        <h4 class="text-danger">Price: $ <strike> {{a.price}} </strike></h4>
+                        <h5 class="text-success">Offer Price: {{a.offer_price}}</h5>
+                    </div>
+                </div>
+            </div>
+            </a>
+            
+        </div>
+            {% endif %}
+            {% endfor %}
+        </div>
     </div>
-</div>
+
+
 
   <footer class="bg-dark text-light pt-5 mt-3" style="font-size: 15px;">
     <div class="container">

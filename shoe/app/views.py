@@ -45,14 +45,14 @@ def add_product(req):
     if 'shop' in req.session:
         if req.method=='POST':
             pid=req.POST['pid']
-            # brand=req.POST['brand']
+            brand=req.POST['brand']
             name=req.POST['name']
             dis=req.POST['dis']
             price=req.POST['price']
             off_price=req.POST['offer_price']
             stock=req.POST['stock']
             file=req.FILES['img']
-            data=Product.objects.create(pid=pid,name=name,
+            data=Product.objects.create(pid=pid,brand=brand,name=name,
                                         dis=dis,price=price,
                                         offer_price=off_price,
                                         stock=stock,img=file,)
@@ -71,7 +71,7 @@ def e_shop_logout(req):
 def edit_product(req,pid):
     if req.method=='POST':
         p_id=req.POST['pid']
-        # brand=req.POST['brand']
+        brand=req.POST['brand']
         name=req.POST['name']
         dis=req.POST['dis']
         price=req.POST['price']
@@ -79,7 +79,7 @@ def edit_product(req,pid):
         stock=req.POST['stock']
         file=req.FILES.get('img')
         if file:
-            Product.objects.filter(pk=pid).update(pid=p_id,name=name,
+            Product.objects.filter(pk=pid).update(pid=p_id,brand=brand,name=name,
                                         dis=dis,price=price,
                                         offer_price=off_price,
                                         stock=stock)
@@ -87,7 +87,7 @@ def edit_product(req,pid):
             data.img=file
             data.save()
         else:
-            Product.objects.filter(pk=pid).update(pid=p_id,name=name,
+            Product.objects.filter(pk=pid).update(pid=p_id,brand=brand,name=name,
                                         dis=dis,price=price,
                                         offer_price=off_price,
                                         stock=stock)
@@ -160,9 +160,13 @@ def contact(req):
 def user_home(req):
     if 'user' in req.session:
         data=Product.objects.all()
+        adidas = Product.objects.filter(brand='Adidas')
+        nike=Product.objects.filter(brand='Nike')
+        puma=Product.objects.filter(brand='Puma')
+        newbalance=Product.objects.filter(brand='Newbalance')
         
 
-        return render(req,'user/home.html',{'products':data,})
+        return render(req,'user/home.html',{'products':data,'adidas': adidas,'nike':nike,'puma':puma,'newbalance': newbalance,})
     else:
         return redirect(e_shop_login)
     
