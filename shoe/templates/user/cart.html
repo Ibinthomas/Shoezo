@@ -107,7 +107,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="{% static 'img/logo.png' %}" alt="Logo">
+                <img src="{% static 'img/shoezo1.png' %}" alt="Logo">
                 
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -157,6 +157,12 @@
             </div>
             {% endfor %}
         </div>
+        <div class="cart-summary">
+            <h3>Cart Summary</h3>
+            <p class="text-success">Total Items: {{ cart|length }}</p>
+            <p class="text-danger">Total Price: ₹{{ total_price }}</p>
+        </div>
+        
     </div>
     
 </body>
