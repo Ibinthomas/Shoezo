@@ -6,36 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/boots"></script>
     <style>
-        a{
+        a {
             text-decoration: none;
         }
         .navbar-brand img {
             height: 80px;
             width: 130px;
         }
-
         .nav-link {
             text-transform: capitalize;
             margin: 0 10px;
         }
-
         .navbar-nav {
             align-items: center;
         }
-
         .navbar-toggler {
             border: none;
             outline: none;
         }
-
-        .navbar-toggler-icon {
-            background-color: #000;
+        /* Style for active nav link */
+        .nav-link.active {
+            color: #ff6600 !important; /* Highlight active menu */
+            font-weight: bold;
         }
         /* Cart container */
         .cart-item {
-            /* border: 1px solid #ddd; */
             padding: 15px;
             padding-top: 10%;
             border-radius: 8px;
@@ -43,76 +39,41 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-    
         .cart-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
         }
-    
-        /* Product image */
-        .cart-item-image img {
-            width: 100%;
-            border-radius: 8px;
-            max-width: 200px;  /* Control the image size */
-            object-fit: cover;
-        }
-    
-        /* Product details */
-        .cart-item-details {
-            flex-grow: 1;
-        }
-    
-        .product-name {
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-    
-        .product-price {
-            font-size: 1rem;
-            color: #555;
-            margin-bottom: 0.5rem;
-        }
-    
-        .quantity-controls a {
-            text-decoration: none;
-            color: #333;
-        }
-    
-        .quantity-controls .qty {
-            font-size: 1.1rem;
-            margin: 0 10px;
-        }
+        /* Responsive Design */
         @media (max-width: 768px) {
             .cart-item {
                 flex-direction: column;
                 align-items: flex-start;
             }
-    
             .cart-item-image {
                 width: 100%;
                 text-align: center;
                 margin-bottom: 15px;
             }
-    
             .cart-item-details {
                 text-align: center;
             }
-    
             .cart-item-details .quantity-controls {
                 justify-content: center;
             }
         }
-
-    
+        @media (max-width: 576px) {
+            .navbar-nav {
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-white bg-white fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="{% static 'img/shoezo1.png' %}" alt="Logo">
-                
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -125,27 +86,31 @@
                     <li class="nav-item">
                         <a class="nav-link" href="about">Blogs</a>
                     </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="view_cart">Cart</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact">Contact</a>
-                </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="logout">logout</a>
+                        <a class="nav-link" href="bookings">Booking</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="view_cart">Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="logout">Logout</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+
+    <!-- Cart Items -->
     <div class="container py-5">
         <div class="row g-4 align-items-center">
             {% for i in bookings %}
             <div class="col-lg-6 col-md-12">
                 <div class="cart-item d-flex align-items-center">
-
                     <div class="cart-item-image">
-                        <img src="{{ i.product.img.url }}" alt="{{ i.product.name }}" class="img-fluid" style="max-height: 200px; object-fit: cover;">
+                        <img src="{{ i.product.img.url }}" alt="{{ i.product.name }}" class="img-fluid" style="max-height: 200px; object-fit: cover; padding-top: 25px;">
                     </div>
                     <div class="cart-item-details ms-3">
                         <h4 class="product-name">{{ i.product.name }}</h4>
@@ -161,7 +126,20 @@
         </div>
     </div>
 
-    
-    
+    <!-- JavaScript for Navbar Active Class -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const currentLocation = window.location.pathname;
+            const navLinks = document.querySelectorAll(".nav-link");
+
+            navLinks.forEach(link => {
+                if (link.getAttribute("href") === currentLocation) {
+                    link.classList.add("active");
+                }
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

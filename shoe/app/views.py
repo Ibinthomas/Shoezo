@@ -6,6 +6,9 @@ import os
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.conf import settings
+from django.utils.timezone import now
+from datetime import timedelta
+
 
 # Create your views here.
 
@@ -230,13 +233,23 @@ def pro_buy(req,pid):
     buy.save()
     return redirect(bookings)
 
-
 def bookings(req):
-    user=User.objects.get(username=req.session['user'])
-    buy=Buy.objects.filter(user=user)[::-1]
-    return render(req,'user/bookings.html',{'bookings':buy})
+    user = User.objects.get(username=req.session['user'])
+    buy = Buy.objects.filter(user=user).order_by('-id')  # Simplified ordering
+    return render(req, 'user/bookings.html', {'bookings': buy})
 
-def cancel_order(req,pid):
-    data =Buy.objects.get(pk=pid)
-    data.delete()
-    return redirect(bookings)
+def cancel_order(req, pid):
+    if 'user' in req.session:
+        try:
+            data = Buy.objects.get(pk=pid)
+            # Check if the order is within the 2-day cancellation period
+            if now() - data.created_at <= timedelta(days=2):
+                data.delete()
+                return redirect(bookings)
+            else:
+                # Provide feedback that the order cannot be canceled
+                return render(req, 'user/error.html', {'error': 'Cannot cancel order after 2 days.'})
+        except Buy.DoesNotExist:
+            return redirect(bookings)  # Handle case if the order doesn't exist
+    else:
+        return redirect(user_home)

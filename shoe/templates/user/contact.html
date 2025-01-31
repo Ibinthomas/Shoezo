@@ -28,7 +28,7 @@
         }
 
         .navbar-toggler-icon {
-            background-color: #000;
+            background-color: #ffffff;
         }
         footer{
             font-family: FFDINforPuma, Inter, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -85,6 +85,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="bookings">Booking</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact">Contact</a>
+                </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout">logout</a>
                     </li>
@@ -96,7 +99,7 @@
     <div class="container py-5" >
         <div class="row">
             <div class="col-md-6 mt-5">
-                <h2>Contact Us</h2>
+                <h2 style="margin-top: 20px;">Contact Us</h2>
                 <form method="POST" action="">
                     {% csrf_token %}
                     <div class="mb-3">

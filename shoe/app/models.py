@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.timezone import now
+
 # Create your models here.
 class Product(models.Model):
     pid=models.TextField()
@@ -22,6 +24,8 @@ class Buy(models.Model):
     qty=models.IntegerField()
     price=models.IntegerField()
     data=models.DateField(auto_now_add=True)
+    created_at = models.DateTimeField(default=now)
+
 
 class Contact(models.Model):
     name = models.TextField()
