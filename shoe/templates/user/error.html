@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Cancellation Error</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            color: #000000;
+            text-align: center;
+            padding: 200px;
+        }
+        .container {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        a {
+            display: block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Order Cancellation Failed</h2>
+        <p>{{ error }}</p>
+        <a href="../bookings">Go Back to Bookings</a>
+    </div>
+</body>
+</html>

@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
-    <meta charset="UTF-8">
+      <meta charset="UTF-8">
+    </head>{% load static %}
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us</title>
+    <title>E-Era</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="{% static 'css/user.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+<style>
         .navbar-brand img {
             height: 80px;
-            width: 130px;
+            width: 130px; 
         }
 
         .nav-link {
@@ -29,34 +32,34 @@
         .navbar-toggler-icon {
             background-color: #ffffff;
         }
-        .about-section img {
-            border-radius: 10px;
-            object-fit: cover;
-        }
-
-        footer {
+        footer{
             font-family: FFDINforPuma, Inter, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            padding: 20px;
-            background-color: #343a40;
-            color: rgb(162, 162, 162);
-        }
+          }
+    
+          footer a{
+          text-decoration: none;
+          color: rgb(162, 162, 162);
+          font-size: small;
+          }
+          footer h6{
+          font-weight: bold;
+          }
+          footer  a:hover{
+          color: white;
+          }
+          footer svg:hover{
+              color: white;
+          }
+          footer img{
+          padding: 5px;
+          margin-bottom: 5px;
+          }
 
-        footer a {
-            text-decoration: none;
-            color: rgb(162, 162, 162);
-            font-size: small;
-        }
-
-        footer a:hover {
-            color: white;
-        }
-    </style>
+</style>
 </head>
 <body>
+    
     <nav class="navbar navbar-expand-lg navbar-white bg-white fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
@@ -69,23 +72,23 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                         <a class="nav-link" href="user_home">Home</a>
+                        <a class="nav-link" href="user_home">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="about">Blogs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="bookings">Booking</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="view_cart">Cart</a>
+                      <a class="nav-link" href="bookings">Booking</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="view_cart">Cart</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="address">Address</a>
                         </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact">Contact</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact">Contact</a>
+                </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout">logout</a>
                     </li>
@@ -94,39 +97,67 @@
         </div>
     </nav>
     
-    <div class="container my- mt-" style="margin-top: 50px;">
-        <h1 class="text-center mb-5"></h1>
-        <div class="row align-items-center about-section mb-5">
-            <div class="col-md-6"    style="padding-top: 70px;" >
-                <img src="{% static 'img/blogs1.png' %}" alt="classrooms" class="img-fluid">
-            </div>
-            <div class="col-md-6">
-                <h2>Air Force 1: The Untouchable Classic That Never Fades</h2>
-                <p>Let’s be real: few sneakers have the impact and staying power of the Nike Air Force 1. Launched in 1982 as a basketball shoe by Bruce Kilgore, the Air Force 1 didn’t just change the game on the court—it went on to dominate street style. And from that very first release, it was clear: this sneaker was here to stay</p>
-            </div>
-        </div>
-        <div class="row align-items-center about-section">
-            <div class="col-md-6 order-md-2">
-                <img src="{% static 'img/blogs2.png' %}" alt="classrooms" class="img-fluid">
-            </div>
-            <div class="col-md-6 order-md-1">
-                <h2>How the Air Max 1 Redefined Sneaker Culture</h2>
-                <p>The Nike Air Max 1 isn’t just another sneaker; it’s a cultural icon that has reshaped sneaker culture since its debut in 1987. Whether you’re a fan of Nike Air shoes for men or eyeing a fresh pair of Nike Air Max 1 women’s shoes, this shoe has left its mark on sneakerheads everywhere.</p>
-                <p>Designed by Tinker Hatfield, the Air Max 1 introduced the visible air unit, changing how we see sneakers—literally. Inspired by architecture, the Nike Air Max shoes for men brought innovation into streetwear by putting Nike’s air-cushioning tech on display. And with that, sneaker culture got its first glimpse of true sneaker art.</p>
-            </div>
-        </div>
-        <div class="row align-items-center about-section mb-5">
-            <div class="col-md-6">
-                <img src="{% static 'img/blogs3.jpg' %}" alt="classrooms" class="img-fluid">
-            </div>
-            <div class="col-md-6">
-                <h2>From 1973 to Now: The Evolution of Nike's Iconic Blazers</h2>
-                <p>Let’s be real: few sneakers have the impact and staying power of the Nike Air Force 1. Launched in 1982 as a basketball shoe by Bruce Kilgore, the Air Force 1 didn’t just change the game on the court—it went on to dominate street style. And from that very first release, it was clear: this sneaker was here to stay</p>
-            </div>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Address Form</h1>
+        <div class="form-container">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="name" class="form-label">House Name:</label>
+                    <input type="text" id="name" name="name" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone Number:</label>
+                    <input type="number" id="phone" name="phone" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Landmark:</label>
+                    <input type="text" id="address" name="address" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="street" class="form-label">Street:</label>
+                    <input type="text" id="street" name="street" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="city" class="form-label">City:</label>
+                    <input type="text" id="city" name="city" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="state" class="form-label">State:</label>
+                    <input type="text" id="state" name="state" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="pin" class="form-label">Pin Code:</label>
+                    <input type="number" id="pin" name="pin" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Submit</button>
+            </form>
         </div>
     </div>
 
-    <!-- Footer -->
+    <div class="container mt-5">
+        <h2 class="text-center">Saved Addresses</h2>
+        <div class="row justify-content-center">
+            {% for i in data %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Name: {{i.name}}</h4>
+                        <h5 class="card-text">Phone: {{i.phone}}</h5>
+                        <h5 class="card-text">Address: {{i.address}}</h5>
+                        <h5 class="card-text">Street: {{i.street}}</h5>
+                        <h5 class="card-text">Pin: {{i.pincode}}</h5>
+                        <h5 class="card-text">City: {{i.city}}</h5>
+                        <h5 class="card-text">State: {{i.state}}</h5>
+                        <a href="delete_address/{{i.pk}}" class="btn btn-danger w-100">Delete</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
     <footer class="bg-dark text-light pt-5 mt-3" style="font-size: 15px;">
         <div class="container">
             <div class="row">
@@ -197,6 +228,8 @@
     
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+
     
 </body>
 </html>

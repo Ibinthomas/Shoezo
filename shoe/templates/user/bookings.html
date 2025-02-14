@@ -93,6 +93,9 @@
                         <a class="nav-link" href="view_cart">Cart</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="address">Address</a>
+                        </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="contact">Contact</a>
                     </li>
                     <li class="nav-item">
@@ -114,17 +117,40 @@
                     </div>
                     <div class="cart-item-details ms-3">
                         <h4 class="product-name">{{ i.product.name }}</h4>
-                        <p class="product-price">Price: ${{ i.product.offer_price }}</p>
+                        <p class="product-price">Price: ₹{{ i.product.offer_price }}</p>
                         <div class="quantity-controls d-flex align-items-center">
                             <span class="qty">Qty: {{ i.qty }}</span>
                         </div>
-                        <a href="../cancel_order/{{i.id}}" class="btn btn-sm btn-danger">Cancel order</a>
+                        <span class="qty">Ordered Date: {{ i.data }}</span><br>
+                        <h5>Address</h5>
+                        {% for j in add %}
+                            <span class="qty">House Name: {{ j.address }}</span><br>
+                            <span class="qty">street: {{ j.street }}</span><br>
+                            <span class="qty">City: {{ j.city }}</span><br>
+                            <span class="qty">State: {{ j.state }}</span><br>
+                            <span class="qty">Phone Number: {{ j.phone }}</span><br>
+                        {% endfor %}
+                        <a href="../cancel_order/{{ i.id }}" class="btn btn-sm btn-danger">Cancel order</a>
                     </div>
                 </div>
             </div>
+            {% empty %}
+            <div class="col-12">
+                <h3 class="text-center text-muted">No bookings available</h3>
+            </div>
             {% endfor %}
         </div>
+    
+        <!-- Booking Summary -->
+        {% if bookings %}
+        <div class="cart-summary mt-4 p-3 border rounded bg-light">
+            <h3>Booking Summary</h3>
+            <p class="text-danger">Total Price: ₹{{ total_price }}</p>
+        </div>
+        {% endif %}
+    
     </div>
+    
 
     <!-- JavaScript for Navbar Active Class -->
     <script>

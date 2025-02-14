@@ -175,6 +175,9 @@
                     <a class="nav-link" href="../view_cart">Cart</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="../address">Address</a>
+                    </li>
+                <li class="nav-item">
                     <a class="nav-link" href="../contact">Contact</a>
                 </li>
                     <li class="nav-item">
@@ -184,18 +187,25 @@
             </div>
         </div>
     </nav>
-    <div class="container py-5">
-        <div class="row g-4 align-items-center">
+   <div class="container py-5">
+    <div class="row g-4 align-items-center"style="padding-top: 80px;">
+        <select name="address" id="address" >
+            <h4>Select Address</h4>
+            {% for j in data1 %}
+              <option value="{{j.pk}}">{{j.name}}, {{j.phone}}, {{j.address}}, {{j.street}}, {{j.pin}}, {{j.state}}</option>
+            {% endfor %}
+        </select>
+            {% csrf_token %}
             {% for i in cart %}
+            <input type="hidden" name="products" value="{{ i.pk }}">
             <div class="col-lg-6 col-md-12">
                 <div class="cart-item d-flex align-items-center">
-
                     <div class="cart-item-image">
                         <img src="{{ i.product.img.url }}" alt="{{ i.product.name }}" class="img-fluid" style="max-height: 200px; object-fit: cover; padding-top: 25px;">
                     </div>
                     <div class="cart-item-details ms-3">
                         <h4 class="product-name">{{ i.product.name }}</h4>
-                        <p class="product-price">Price: ${{ i.product.offer_price }}</p>
+                        <p class="product-price">Price: ₹{{ i.product.offer_price }}</p>
                         <div class="quantity-controls d-flex align-items-center">
                             <a href="../qty_dec/{{i.pk}}" class="btn btn-outline-secondary btn-sm me-2">-</a>
                             <span class="qty">Qty: {{ i.qty }}</span>
@@ -206,14 +216,16 @@
                 </div>
             </div>
             {% endfor %}
-        </div>
-        <div class="cart-summary">
-            <h3>Cart Summary</h3>
-            <p class="text-danger">Total Price: ₹{{ total_price }}</p>
-            <p class="text-success">Total Items: {{ cart|length }}</p>
-        </div>
-        
+
+            <div class="cart-summary">
+                <h3>Cart Summary</h3>
+                <p class="text-danger">Total Price: ₹{{ total_price }}</p>
+                <p class="text-success">Total Items: {{ cart|length }}</p>
+                <a href="../buy_all" class="btn btn-info" style="margin-left: 20px;">Buy</a>
+            </div>
     </div>
+</div>
+
 
     <footer class="bg-dark text-light pt-5 mt-3" style="font-size: 15px;">
         <div class="container">

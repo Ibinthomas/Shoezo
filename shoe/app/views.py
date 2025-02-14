@@ -8,6 +8,9 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.utils.timezone import now
 from datetime import timedelta
+from django.shortcuts import redirect, get_object_or_404
+from .models import Cart, Order, Product, Buy
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -196,8 +199,9 @@ def add_to_cart(req,pid):
 def view_cart(req):
     user=User.objects.get(username=req.session['user'])
     data=Cart.objects.filter(user=user)
+    data1=Address.objects.all()
     total_price = sum(item.product.offer_price * item.qty for item in data) 
-    return render(req,'user/cart.html',{'cart':data , 'total_price': total_price})
+    return render(req,'user/cart.html',{'cart':data , 'total_price': total_price,'data1':data1})
 
 def qty_in(req,cid):
     data=Cart.objects.get(pk=cid)
@@ -224,32 +228,94 @@ def cart_pro_buy(req,cid):
     buy.save()
     return redirect(bookings)
 
-def pro_buy(req,pid):
-    product=Product.objects.get(pk=pid)
-    user=User.objects.get(username=req.session['user'])
-    qty=1
-    price=product.offer_price
-    buy=Buy.objects.create(product=product,user=user,qty=qty,price=price)
-    buy.save()
-    return redirect(bookings)
+# def pro_buy(req,pid):
+#     product=Product.objects.get(pk=pid)
+#     user=User.objects.get(username=req.session['user'])
+#     qty=1
+#     price=product.offer_price
+#     buy=Buy.objects.create(product=product,user=user,qty=qty,price=price)
+#     buy.save()
+#     return redirect(bookings)
 
 def bookings(req):
     user = User.objects.get(username=req.session['user'])
-    buy = Buy.objects.filter(user=user).order_by('-id')  # Simplified ordering
-    return render(req, 'user/bookings.html', {'bookings': buy})
+    buy = Buy.objects.filter(user=user).order_by('-id')
+    add=Address.objects.filter(user=user)
+
+    # Calculate total price
+    total_price = sum(i.product.offer_price * i.qty for i in buy)
+
+    return render(req, 'user/bookings.html', {'bookings': buy, 'total_price': total_price,'add':add})
+
 
 def cancel_order(req, pid):
     if 'user' in req.session:
         try:
             data = Buy.objects.get(pk=pid)
-            # Check if the order is within the 2-day cancellation period
-            if now() - data.created_at <= timedelta(days=2):
+            if now() - data.created_at <= timedelta(days=10):
                 data.delete()
                 return redirect(bookings)
             else:
-                # Provide feedback that the order cannot be canceled
                 return render(req, 'user/error.html', {'error': 'Cannot cancel order after 2 days.'})
         except Buy.DoesNotExist:
-            return redirect(bookings)  # Handle case if the order doesn't exist
+            return redirect(bookings) 
     else:
         return redirect(user_home)
+    
+def address(req):
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        data=Address.objects.filter(user=user)
+        if req.method=='POST':
+            user=User.objects.get(username=req.session['user'])
+            name=req.POST['name']
+            phn=req.POST['phone']
+            house=req.POST['address']
+            street=req.POST['street']
+            city=req.POST['city']
+            pin=req.POST['pin']
+            state=req.POST['state']
+            data=Address.objects.create(user=user,name=name,phone=phn,address=house,city=city,street=street,pincode=pin,state=state)
+            data.save()
+            return redirect(address)
+        else:
+            return render(req,"user/address.html",{'data':data})
+    else:
+        return redirect(e_shop_login)
+
+def delete_address(req,pid):
+    if 'user' in req.session:
+        data=Address.objects.get(pk=pid)
+        data.delete()
+        return redirect(address)
+    
+
+
+def buy_all(req):
+    if req.method == "POST":
+        products = req.POST.getlist("products")
+        for product_id in products:
+            cart_item = get_object_or_404(Cart, pk=product_id)
+            Order.objects.create(
+                user=req.user,
+                product=cart_item.product,
+                quantity=cart_item.qty,
+                total_price=cart_item.product.offer_price * cart_item.qty
+            )
+            cart_item.delete()  # Remove item from cart after purchase
+        return redirect('order_success')  # Redirect to a success page
+
+def pro_buy(req, pid):
+    product = get_object_or_404(Product, pk=pid)
+    user = req.user  # Assuming user is logged in and authenticated
+
+    if not user.is_authenticated:
+        return redirect('login')  # Redirect to login if user is not authenticated
+
+    qty = 1
+    price = product.offer_price
+
+    buy = Buy.objects.create(product=product, user=user, qty=qty, price=price)
+    buy.save()
+
+    return redirect('bookings')  # Ensure 'bookings' URL exists

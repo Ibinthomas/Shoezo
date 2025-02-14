@@ -28,6 +28,14 @@ urlpatterns = [
     path('bookings',views.bookings),
     path('cancel_order/<pid>',views.cancel_order),
     path('pro_buy/<pid>',views.pro_buy),
+    path('address',views.address),
+    path('delete_address/<pid>',views.delete_address),
+    path('cancel_order/<int:pid>/',views.cancel_order, name='cancel_order'),
+    path("buy_all/",views.buy_all),
+    # path('order-success/',views.order_success, name='order_success'),  # Ensure this is defined
+
+
+
 
 
 ]
