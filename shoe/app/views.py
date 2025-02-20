@@ -112,7 +112,8 @@ def delete_product(req,pid):
 
 def view_bookings(req):
     buy=Buy.objects.all()[::-1]
-    return render(req,'shop/view_bookings.html',{'buy':buy})
+
+    return render(req,'shop/view_bookings.html',{'buy':buy,})
 
 # ---------------------------user------------------
 
@@ -180,7 +181,9 @@ def user_home(req):
 def view_product(req,pid):
     if 'user' in req.session:
         data=Product.objects.get(pk=pid)
-        return render(req,'user/view_product.html',{'product':data})
+        relate=Product.objects.all()
+
+        return render(req,'user/view_product.html',{'product':data,'relate':relate})
     else:
         return render(req,'user/home.html')
     
@@ -252,7 +255,7 @@ def cancel_order(req, pid):
     if 'user' in req.session:
         try:
             data = Buy.objects.get(pk=pid)
-            if now() - data.created_at <= timedelta(days=10):
+            if now() - data.created_at <= timedelta(hours=1):
                 data.delete()
                 return redirect(bookings)
             else:
